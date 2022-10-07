@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable curly */
 import React, {useState} from 'react';
 import {Text, View} from 'react-native';
@@ -7,15 +8,44 @@ export const CalculatorScreen = () => {
   const [calculation, setCalculation] = useState<string>('0');
 
   const NumberOperation = (num: string) => {
-    if (calculation === '0' && num === '0') return;
-
-    if (calculation === '0') setCalculation(num);
-
-    if (calculation !== '0') setCalculation(calculation + num);
+    if (calculation.includes('.') && num === '.') return;
+    if (calculation.startsWith('0') || calculation.startsWith('-0')) {
+      if (num === '.') {
+        setCalculation(calculation + num);
+      } else if (num === '0' && calculation.includes('.')) {
+        setCalculation(calculation + num);
+      } else if (num !== '0' && !calculation.includes('.')) {
+        setCalculation(num);
+      } else if (num === '0' && !calculation.includes('.')) {
+        setCalculation(calculation);
+      } else {
+        setCalculation(calculation + num);
+      }
+    } else {
+      setCalculation(calculation + num);
+    }
   };
 
-  const Operation = (num: string) => {
-    setCalculation(calculation + num);
+  const Operation = (term: string) => {
+    if (calculation.includes('-')) {
+      setCalculation(calculation.replace('-', ''));
+    } else {
+      setCalculation('-' + calculation);
+    }
+  };
+
+  const OperationDel = () => {
+    let negative = '';
+    let numberTm = calculation;
+    if (calculation.includes('-')) {
+      negative = '-';
+      numberTm = numberTm.substring(1);
+    }
+    if (numberTm.length > 1) {
+      setCalculation(negative + numberTm.slice(0, -1));
+    } else {
+      setCalculation('0');
+    }
   };
 
   const CleanNumberOperation = () => setCalculation('0');
@@ -41,10 +71,10 @@ export const CalculatorScreen = () => {
           onPress={() => Operation('+/-')}
         />
         <Btn
-          text="%"
+          text="del"
           color="#9B9B9B"
           textColor="black"
-          onPress={() => Operation('%')}
+          onPress={() => OperationDel()}
         />
         <Btn text="÷" color="#FF9427" onPress={() => Operation('÷')} />
       </View>
