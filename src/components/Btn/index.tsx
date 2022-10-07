@@ -1,23 +1,22 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-type ColorBtn = 'primary' | 'secondary' | 'ternary';
+type ColorBtn = '#9B9B9B' | '#2D2D2D' | '#FF9427';
+type TextColor = 'primary' | 'secondary';
 interface BtnProps {
   text: string;
   onPress?: () => void;
-  color: ColorBtn;
+  color?: ColorBtn;
+  textColor?: TextColor;
 }
 
-export const Btn = ({text, color}: BtnProps) => {
+export const Btn = ({text, color = '#2D2D2D', textColor}: BtnProps) => {
   return (
     <View
-      style={
-        color === 'primary'
-          ? {...styles.btn, backgroundColor: '#9B9B9B'}
-          : color === 'secondary'
-          ? {...styles.btn, backgroundColor: '#2D2D2D'}
-          : {...styles.btn, backgroundColor: '#FF9427'}
-      }>
+      style={{
+        ...styles.btn,
+        backgroundColor: color,
+      }}>
       <Text style={styles.textBtn}>{text}</Text>
     </View>
   );
@@ -29,13 +28,14 @@ const styles = StyleSheet.create({
     width: 80,
     borderRadius: 100,
     justifyContent: 'center',
+    backgroundColor: '#2D2D2D',
     marginHorizontal: 10,
   },
   textBtn: {
     textAlign: 'center',
     padding: 10,
     fontSize: 30,
-    color: 'black',
+    color: 'white',
     fontWeight: '600',
   },
 });

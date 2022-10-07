@@ -8,10 +8,10 @@ export const CalculatorScreen = () => {
       <Text style={styles.result}>1,500.000</Text>
 
       <View style={styles.file}>
-        <Btn text="C" color="primary" />
-        <Btn text="+/-" color="primary" />
-        <Btn text="%" color="secondary" />
-        <Btn text="÷" color="ternary" />
+        <Btn text="C" />
+        <Btn text="+/-" />
+        <Btn text="%" />
+        <Btn text="÷" color="#FF9427" />
       </View>
     </View>
   );
